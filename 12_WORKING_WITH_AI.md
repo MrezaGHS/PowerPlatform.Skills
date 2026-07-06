@@ -6,9 +6,9 @@ These docs exist so an AI assistant with them in context can do the code side of
 
 ## Two ways to connect
 
-### Option A: point a coding agent at this repo
+### Option A: give a coding agent this repo
 
-Clone this repo (or add it as a folder in the workspace) alongside the app repo. Tell the agent to read the numbered docs before writing anything, or keep a CLAUDE.md style instructions file in the app repo that says: follow the rules in the Power-Platform docs, especially 06_POWERFX_RULES.md, 03_SOURCE_WORKFLOW.md, and 10_MANUAL_STEPS.md. A coding agent can then edit pa.yaml source, run pac commands, manage git, and draft the docs directly.
+Two ways. Install it as a skill: copy this folder into the agent's skills directory (for Claude Code, `~/.claude/skills/PowerPlatform-Skill/`), and the SKILL.md frontmatter makes it trigger on any Power Apps work. Or clone it alongside the app repo and tell the agent to read SKILL.md first (CLAUDE.md at the root does that automatically when the agent works inside this repo). Either way the agent can then edit pa.yaml source, run pac commands, manage git, and draft the docs directly.
 
 ### Option B: a chat project with knowledge files
 

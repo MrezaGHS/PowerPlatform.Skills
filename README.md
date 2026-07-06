@@ -12,7 +12,7 @@ A developer (or a capable AI assistant with these files in context) who needs to
 
 Reading order for a first pass: 01, then 03, then 11. Those three give you the platform, the core constraint, and the method. The rest are reference docs you pull up while building.
 
-If you are wiring an AI assistant into the build (the recommended way), read 12 first, it tells you how to connect these docs and how to run the collaboration. A CLAUDE.md sits at the repo root so coding agents pointed at this repo pick up the rules automatically.
+If you are wiring an AI assistant into the build (the recommended way), read 12 first, it tells you how to connect these docs and how to run the collaboration. [SKILL.md](SKILL.md) at the repo root is the operating contract for the assistant: install this folder as a skill, or just point a coding agent at the repo (CLAUDE.md routes it there automatically).
 
 ## The docs
 
