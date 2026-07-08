@@ -67,6 +67,9 @@ Every entry here happened on a real build. Search this page first, the exact mes
 | Flow runs green but the folder or row is missing | Wrong site URL or list GUID in the action | Actions reference lists by GUID. Verify against the schema doc | 09 |
 | Folder creation flow fails on re-run | `CreateNewFolder` errors when the folder exists | `runAfter` accepting Succeeded and Failed, plus the idempotency flag | 09 |
 | Choice value patch silently does nothing or errors | The value drifted from what SharePoint actually has | Confirm current Choice values in SharePoint settings before coding against them | 04 |
+| `WorkflowOperationParametersExtraParameter`, "no definition for parameter 'overwrite'", on trying to turn a flow on | The SharePoint `CreateFile` action retired the `overwrite` parameter | Delete `overwrite` from the action's parameters. Same name uploads now error instead of silently replacing, handle that explicitly | 09 |
+| `InvalidTemplate`, `createArray` "invoked with no parameters" | `createArray()` called with zero arguments in a flow expression | `createArray()` needs at least one item. Seed with `createArray('')` and filter blanks from the result | 09 |
+| A pasted people picker combo will not filter as you type a name | `SearchFields` carried over as `["Claims"]` instead of `["DisplayName"]` after copy paste | Open Advanced on the combo, set `SearchFields` to `["DisplayName"]` | 03 |
 
 ## When something is not listed
 

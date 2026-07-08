@@ -15,6 +15,12 @@ In practice the pack direction works, and works well, until the app contains a S
 
 The moment either exists anywhere in the app, `pac canvas pack` fails for the whole app. Not for that control, for everything. No packaging format dodges it (bare msapp or solution zip, the failure is in YAML to package validation, not the container). This was proven the hard way, twice.
 
+### Copy pasting a people picker combo: check SearchFields
+
+Once one `Classic/ComboBox` people picker is built and working, the fast way to add the same picker to another screen or container is copy and paste in Studio, then rename. This works, but paste does not always carry `SearchFields` correctly. A pasted combo can come out with `SearchFields: ["Claims"]` (the raw login string) instead of `SearchFields: ["DisplayName"]`.
+
+This fails silently. The combo still renders, still opens, still lets you pick a person from the dropdown. The only symptom is that typing a person's name to filter the list does not match anything, because it is searching the wrong field. Nothing in Studio flags it as an error. After any copy paste of a people picker, open Advanced on the pasted control and confirm `SearchFields` reads `["DisplayName"]`, not `["Claims"]`.
+
 ```
 Era 1 (before any Studio-only control):
   edit pa.yaml -> pac canvas pack -> import msapp -> test        REPEATABLE

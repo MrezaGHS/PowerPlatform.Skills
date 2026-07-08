@@ -6,8 +6,8 @@ Flows do the three jobs the canvas app cannot: create SharePoint folders, write 
 
 ## Ground rules
 
-- Trigger: PowerApps (V2) for every app called flow, in the same environment as the app.
-- Connections: `shared_sharepointonline` (SharePoint) and `shared_office365` (Outlook, Send an email V2), running as invoker, so files and emails carry the identity of the person who clicked.
+- Trigger: PowerApps (V2) for every app called flow, in the same environment as the app. Two automated flows are an exception, see the permission sync shape in 08_APPROVALS_PERMISSIONS.md, they trigger on a SharePoint list's created or modified event, not from the app.
+- Connections: `shared_sharepointonline` (SharePoint) and `shared_office365` (Outlook, Send an email V2), running as invoker by default, so files and emails carry the identity of the person who clicked. The deliberate exception is the drop box upload flow (08_APPROVALS_PERMISSIONS.md), whose connection is embedded on purpose so it runs as the maker instead of the invoker, letting someone submit into a folder they cannot read.
 - One writer per column (06_POWERFX_RULES.md Rule 6). Flow written columns (`Folders_Created`, `Root_Folder_Url`, `Notification_Sent` flags) are read by the app, never written by it.
 - Idempotency flags so a re-run never duplicates (`Folders_Created: true` written back after folder creation).
 - Deep link every email: append `&dealId=<record id>` (and optionally `&view=<step>`) to the app play URL so the recipient lands on the exact record.
@@ -181,7 +181,7 @@ Hand authoring flow JSON from nothing fails on the invisible parts: GUIDs, conne
 1. A human creates a skeleton in the Power Automate designer: the PowerApps V2 trigger with the inputs named and ordered, the connection wired to the existing connection reference, one placeholder action.
 2. Export the solution (unmanaged) and unzip.
 3. Author the real action logic by editing the flow's JSON. The trigger, connections, and auth boilerplate are now known good, and an existing flow in the same solution is the style reference for every action shape.
-4. `pac solution unpack` the finished zip into the repo for version control, and import the solution back through the maker portal.
+4. `pac solution unpack --zipfile <exported>.zip --folder <repo path>` the finished zip into the repo for version control, and import the solution back through the maker portal. Unpack produces one `<FlowName>-<GUID>.json` plus a `.json.data.xml` sidecar per flow, both text, both diffable.
 
 ## Registering a flow in the solution by hand
 
@@ -198,3 +198,8 @@ This works and was done in production, but the skeleton first method above produ
 ## Wiring the app to a flow
 
 A `.Run()` only resolves after the flow is added to the app in Studio (the Power Automate pane). A YAML reference alone does not connect it, so the real `.Run()` wiring is part of the manual handoff (10_MANUAL_STEPS.md). The proven interim: have the button patch the flag directly (`Patch(Deals, varDeal, { Folder_Created: true })`) so the gates and downstream UI can be tested before the flow exists, then swap in the real call in Studio. And after any flow signature change: remove and re-add the flow in the pane, or you get the argument count cache error.
+
+## Two connector and expression traps that only show up at activation or runtime
+
+- **`overwrite` on `CreateFile` gets rejected when you try to turn the flow on.** An older SharePoint `CreateFile` action carrying `"overwrite": true` in its parameters imports fine, looks fine in the designer, and then fails with `WorkflowOperationParametersExtraParameter`, "The API operation does not contain a definition for parameter 'overwrite'" the moment you try to enable it. The connector retired the parameter. Fix: delete the `overwrite` key from every `CreateFile` action's parameters. The behavior change is real, not just a JSON tweak: uploading a file whose name already exists in the folder now errors instead of silently replacing it, so if silent replace was relied on, handle that case explicitly (rename, or check first with `GetFileItem`).
+- **`createArray()` called with zero arguments throws at runtime**, not at save. A dedup pattern like `union(createArray(a, b, c), createArray())` (the empty call meant "no extra items") fails with `InvalidTemplate`, "'createArray' expects a comma separated list of parameters. The function was invoked with no parameters." `createArray()` needs at least one argument. Seed it with an empty string instead: `createArray('')`, then filter blanks out of the unioned result the same way you already filter blank emails or names.

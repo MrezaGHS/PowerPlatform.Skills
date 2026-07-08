@@ -106,6 +106,48 @@ The most common "bug" in production is not a bug: a user gets "you don't have pe
 
 Confidentiality is enforced here, not in the app. The financial analysis subfolder and the margin columns are the sensitive zone: finance, the executives, and admins. Sales sees the price they entered, never the margin breakdown. Legal sees documents for legal review, not the money. If the app ever leaked a control by mistake, SharePoint still blocks the data.
 
+### Layer 1 automated: per record permissions
+
+The static grid above is the baseline for a list. A build with real confidentiality needs it per record too: sales rep A must not see the deal record, folder, or file rows that belong to sales rep B, even though both have Contribute on the same list. A flat SharePoint permission cannot express that, so a flow does it dynamically.
+
+Shape proven in production, an automated flow (not app called) triggered on the main list's created or modified event:
+
+1. Trigger: SharePoint "When an item is created or modified" on the record list.
+2. `Break role inheritance` on the item (via the SharePoint REST HTTP action, see below), clearing sub scopes.
+3. Grant the item to: the standing groups (site owners, the approvers group) and the record's own person columns (sales rep, architect, finance lead, plus the item's author so a record is never orphaned before people are picked). Skip blank person columns, and de duplicate first, one person can hold two roles.
+4. If a subordinate folder already exists for the record (an idempotency flag, same pattern as folder creation), break inheritance on that folder too, then re break a further nested confidential subfolder with a narrower grant list (finance lead plus the approvers group plus owners, nobody else).
+5. A second automated flow does the same thing for the file index list, triggered on that list's created or modified event, looked up against the parent record for its person columns. Rows filed under the confidential subfolder get the narrow grant, everything else gets the record team.
+
+Because this runs on every edit, changing who is on a record (swap the finance lead) re syncs the grants automatically, no separate step needed. The consequence that falls out for free: SharePoint security trimming then scopes every browse gallery, dashboard, and KPI tile in the app to what the signed in user can actually open. A person filter in the app formula becomes redundant, the data source itself only returns what that user holds a grant on.
+
+Known limits to write down, not surprises to rediscover: there is a short window (seconds) between a record being created and the flow locking it down. The flow re running on every edit is a feature, not a bug, but it means a manual SharePoint permission change on one item gets clobbered on the next edit, so permission changes belong in the flow's grant list, not clicked by hand.
+
+The SharePoint REST calls used inside the flow (via the generic HTTP action against `_api/web/...`), reusable on any list:
+
+```
+POST _api/web/lists/getbytitle('{List}')/items({id})/breakroleinheritance(copyRoleAssignments=false,clearSubscopes=true)
+POST _api/web/lists/getbytitle('{List}')/items({id})/roleassignments/addroleassignment(principalid={id},roledefid={roleDefId})
+POST _api/web/ensureuser   body: { "logonName": "i:0#.f|membership|<email>" }
+GET  _api/web/sitegroups/getbyname('{GroupName}')?$select=Id
+GET  _api/web/associatedownergroup?$select=Id
+```
+
+`roledefid` is the numeric role definition id, the common ones are Full Control (1073741829), Contribute or Edit (1073741830, matches the "Edit" level in most site templates), Read (1073741826). Look these up per site once, they can drift by SharePoint template.
+
+### Layer 1, confidential submission without read access: the drop box flow
+
+A different problem from record visibility: letting someone submit into a folder they must never be able to read back, not even their own submission (a sensitive report the submitter should hand off but not retain). The instant, app called upload flow (09_FLOWS.md shape 2) normally runs as the invoker, so the uploader needs Contribute on the target folder, which is exactly the access being withheld.
+
+The fix is a second, near identical upload flow whose SharePoint connection is embedded (bound to the flow owner) instead of the usual invoker connection. Same trigger shape, same inputs, same actions as the normal upload flow. The only difference is the connection reference's `runtimeSource`, `embedded` instead of `invoker`. The app calls this flow instead of the normal one whenever the target subfolder is the confidential one, same `.Run()` signature, so the app side branching is a single `If` on the subfolder value:
+
+```
+If(varTargetSubfolder = "Financial analysis",
+    UploadConfidential.Run(...same args...),
+    UploadDocument.Run(...same args...))
+```
+
+Because the connection is embedded, the flow uploads as the maker regardless of who clicked the button in the app. The uploader needs zero SharePoint access to the folder, submits blind, and cannot browse back to see it, not even their own file. Pair this with the per record permission flow above, which locks the confidential subfolder down to the narrow grant list, and the loop closes: broad submission, narrow read.
+
 ### Layer 2: app gates. UX, not security.
 
 Inside the app, gates decide what renders and what is enabled. They prevent confusion and accidents. A user with list Contribute could bypass the app entirely, so never treat an app gate as a security boundary.
@@ -177,3 +219,6 @@ Pick the calibration per process, deliberately, and write it down.
 | Approve button disabled for an approver | Not their row, wrong cycle, or the record is locked |
 | Combo shows last cycle's approver | Missing cycle filter in DefaultSelectedItems (06_POWERFX_RULES.md Rule 8) |
 | Admin cannot edit a step | By design. Visibility, not authority |
+| A newly assigned person still cannot see the record, even hours later | The per record permission flow only runs on that record's own created or modified event. Open and save the record once to re-trigger it, or check the flow's run history for a failure |
+| A person removed from a record's team can still open it | The flow re-syncs grants on every edit, so a stale grant survives until the record is edited again after the removal. Not automatic on person column removal alone if nothing else changed the item |
+| An approver added to the roles list still cannot see any records | The roles list row controls what the app assigns. Seeing records is controlled separately by the SharePoint group behind Layer 1 automated. Add the person to both |
