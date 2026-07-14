@@ -61,7 +61,6 @@ Every app gets its own private GitHub repo. The layout that worked:
 ```
 <AppName>/
   README.md                       the redacted front door
-  sync.ps1                        one command commit and push (or export and sync)
   .gitignore
   .gitattributes                  * text=auto
   knowledgebase/                  numbered business and design docs (01_..., 02_...)
@@ -111,23 +110,24 @@ powerapps/flows/*/CanvasApps/*.msapp
 
 Two rules behind that list. First, binary `.msapp` files are build artifacts, the unpacked YAML is the source, so the binaries stay out (they add hundreds of KB per commit and diff as "binary file changed"). Second, anything confidential (original business documents, real logos) never enters git at all. The repo is written redacted from the start: company name replaced with an alias, people replaced with role titles. See 12_WORKING_WITH_AI.md for the redaction convention.
 
-## The sync script
+## The pull request workflow
 
-Every repo carries a `sync.ps1` so the daily loop is one command. Two variants exist, matched to the app's era (see 03_SOURCE_WORKFLOW.md):
+Every change goes on its own branch and lands through a pull request. Nothing is committed straight to `main`. Protect `main` once the app is live so this is enforced, not just a habit (see 03_SOURCE_WORKFLOW.md for how this maps to the two eras).
 
-Variant A, mirror sync (app is edited in Studio, repo mirrors it). The script pulls with `git pull --rebase --autostash`, runs `pac solution export`, `pac solution unpack`, `pac canvas unpack --layout SourceCode`, then commits and pushes. One command captures whatever changed in the cloud:
-
-```powershell
-.\sync.ps1 "Fix Step 5 reviewer count not updating"
-```
-
-Variant B, plain commit sync (docs and hand mirrored source). The script pulls, adds what you name to the commit (or everything), shows the list, asks to confirm, commits, pushes. Add a guard that refuses to run on `main` if the repo uses protected main plus pull requests:
+The loop is the same for docs and for source:
 
 ```powershell
-.\sync.ps1 "Update approvals doc" powerapps/05_APPROVALS.md
+git checkout -b my-change
+# make your edits (for a canvas app: export and unpack first)
+git add -A
+git commit -m "what changed"
+git push -u origin my-change
+gh pr create
 ```
 
-Both variants stop on the first failed step so nothing broken gets pushed. Commit per feature or fix, not one giant "multiple fixes" commit.
+Merge on GitHub after review. Zero approvals is fine when you work alone. Use one branch and one PR per feature or fix, not one giant "multiple fixes" commit.
+
+For a canvas app edited in Studio, the export step is the same three pac commands: `pac solution export`, `pac solution unpack`, then `pac canvas unpack --layout SourceCode`. Run them on your branch before you add and commit. The export and unpack helper cuts a branch and opens a PR for you, so the cloud changes still land as a reviewable PR instead of a commit straight to `main`.
 
 ## Git discipline that proved worth it
 

@@ -88,6 +88,6 @@ After the one way door, every change follows this ritual:
 1. The code side (AI or developer) writes the exact property values and formula blocks, stated as "control X, property Y, paste this".
 2. The human pastes into Studio, saves, tests in the running app.
 3. Only after the human confirms it works: mirror the same change into the repo YAML, commit on a branch, open the PR. If it is rejected, nothing is committed.
-4. Periodically run the export sync to true up the whole repo from the cloud (03_SOURCE_WORKFLOW.md).
+4. Periodically run the export and unpack on a branch and open a PR to true up the whole repo from the cloud (03_SOURCE_WORKFLOW.md).
 
 The order is the point. Paste first, confirm, then mirror. The repo only ever contains confirmed reality.

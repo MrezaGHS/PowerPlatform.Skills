@@ -19,7 +19,7 @@ If you are wiring an AI assistant into the build (the recommended way), read 12 
 | Doc | What it holds |
 |---|---|
 | [01_PLATFORM_MAP.md](01_PLATFORM_MAP.md) | The stack, why SharePoint and not Dataverse, what this builds, and the five bucket map of what is code versus what is clicks |
-| [02_ENVIRONMENT_SETUP.md](02_ENVIRONMENT_SETUP.md) | Tools, pac auth, repo layout, gitignore, sync scripts, git discipline |
+| [02_ENVIRONMENT_SETUP.md](02_ENVIRONMENT_SETUP.md) | Tools, pac auth, repo layout, gitignore, the pull request workflow, git discipline |
 | [03_SOURCE_WORKFLOW.md](03_SOURCE_WORKFLOW.md) | pa.yaml anatomy, pack and unpack, the one way door (PA2108), the two eras of the workflow |
 | [04_SHAREPOINT_DATA.md](04_SHAREPOINT_DATA.md) | The four list shape, naming rules, column types in Power Fx, files are truth, the schema contract doc |
 | [05_APP_ARCHITECTURE.md](05_APP_ARCHITECTURE.md) | The single screen shell: view state, OnStart sections, OnVisible sync, theme, naming conventions |

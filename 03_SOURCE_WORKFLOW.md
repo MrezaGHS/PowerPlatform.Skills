@@ -113,7 +113,7 @@ After the one way door, Power Apps Studio is the only editor. Two working styles
 
 Style 1, paste driven (day to day changes). The developer (or the AI assistant, see 12_WORKING_WITH_AI.md) writes the exact Power Fx property values. A human pastes them into Studio, tests, and confirms. Only after confirmation does the same change get mirrored into the repo YAML by hand and committed. Order matters: paste first, confirm, then mirror. Nothing rejected ever lands in git.
 
-Style 2, export driven (periodic true up). Run the mirror sync script: `pac solution export`, `pac solution unpack` into the repo, `pac canvas unpack --layout SourceCode` on the msapp inside it, commit everything. This captures accumulated Studio work in one commit and corrects any drift from hand mirroring.
+Style 2, export driven (periodic true up). On a fresh branch, run the export and unpack helper: `pac solution export`, `pac solution unpack` into the repo, `pac canvas unpack --layout SourceCode` on the msapp inside it, then commit and open a pull request. The helper cuts the branch and opens the PR for you instead of committing to `main`. This captures accumulated Studio work in one PR and corrects any drift from hand mirroring.
 
 The repo in era 2 is a reviewable changelog of the live app, and the protection rules (protected main, PRs) keep it honest.
 

@@ -14,8 +14,8 @@ Every entry here happened on a real build. Search this page first, the exact mes
 | `pac canvas pack` fails with PA2108 (unknown property `SearchItems`) | The app contains a Studio only control (people picker combo, attachment form). The one way door is closed | Stop packing forever. Switch to the era 2 workflow: edit in Studio, export, unpack, commit | 03 |
 | Pack succeeds but the imported app is full of formula errors | Pack validates structure, not Power Fx | Open the Formulas and errors panel in Studio after every import and clear every red | 03 |
 | Import shows a "validate by opening in Studio" banner | Normal for a YAML packed app | Open it in Studio once | 03 |
-| `git pull` rejected, remote contains work you do not have | Repo edited on GitHub directly | Use `git pull --rebase --autostash` (the sync scripts do) | 02 |
-| Sync script committed a giant unreadable diff | Binary msapp in git, or a full re-unpack | Gitignore the msapp binaries. Expect re-indentation noise in YAML diffs, write commit messages that describe the app change | 02, 03 |
+| `git pull` rejected, remote contains work you do not have | Repo edited on GitHub directly | Run `git pull --rebase --autostash` on your branch before you push | 02 |
+| A PR shows a giant unreadable diff | Binary msapp in git, or a full re-unpack | Gitignore the msapp binaries. Expect re-indentation noise in YAML diffs, write commit messages that describe the app change | 02, 03 |
 
 ## Power Fx, at author time
 
