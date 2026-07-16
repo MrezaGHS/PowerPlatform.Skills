@@ -6,14 +6,29 @@ This is a general guide, not documentation for any specific app. The method: sin
 
 ## Install
 
-This repo is a Claude Code plugin. In Claude Code, add it as a marketplace and install:
+This repo is a Claude Code plugin. It works anywhere you run Claude Code: the CLI, the VS Code or JetBrains extension, and the desktop app. It is not part of Cursor's own AI, but the terminal commands below run in any terminal, including the one inside Cursor or VS Code.
+
+The repo is public, so anyone can install it on any Claude plan, no enterprise needed.
+
+Terminal, the reliable way that works in every setup:
+
+```
+claude plugin marketplace add MrezaGHS/PowerPlatform.Skills
+claude plugin install powerplatform-skills@powerplatform-skills
+```
+
+Run those from a project folder, not your home directory. A git safety check can otherwise refuse to clone. Then `claude plugin list` should show `powerplatform-skills` as enabled. Restart your Claude Code session so the skill loads.
+
+Inside a Claude Code chat session, the interactive form also works:
 
 ```
 /plugin marketplace add MrezaGHS/PowerPlatform.Skills
 /plugin install powerplatform-skills@powerplatform-skills
 ```
 
-The skill then auto triggers on Power Apps and Power Automate work, on any Claude plan, no enterprise needed. The repo is public, so anyone you send it to installs the same way. Update later with `/plugin update powerplatform-skills`.
+Enter one value per prompt in the dialog. The `/plugin` command is not available in every surface (the desktop app hides it), so use the terminal commands above if you do not see it.
+
+Once installed, the skill auto triggers on Power Apps and Power Automate work. Update later with `claude plugin update powerplatform-skills` (or `/plugin update` in chat).
 
 ## Who this is for
 
