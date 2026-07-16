@@ -4,6 +4,17 @@ Everything learned building production Power Apps the code first way, written do
 
 This is a general guide, not documentation for any specific app. The method: single screen Power Apps canvas apps on SharePoint lists with Power Automate flows, built and version controlled as text, pa.yaml canvas source, flow JSON, and markdown design docs in git. Every pattern, rule, and error in these docs earned its place on a real production build.
 
+## Install
+
+This repo is a Claude Code plugin. In Claude Code, add it as a marketplace and install:
+
+```
+/plugin marketplace add MrezaGHS/PowerPlatform.Skills
+/plugin install powerplatform-skills@powerplatform-skills
+```
+
+The skill then auto triggers on Power Apps and Power Automate work, on any Claude plan, no enterprise needed. The repo is public, so anyone you send it to installs the same way. Update later with `/plugin update powerplatform-skills`.
+
 ## Who this is for
 
 A developer (or a capable AI assistant with these files in context) who needs to build an internal business process app on Microsoft 365 without premium licensing: multi step workflows, approvals, document folders, notifications, dashboards, audit locks. If you can read a formula and use a terminal, this is enough to build all of that.
@@ -12,7 +23,7 @@ A developer (or a capable AI assistant with these files in context) who needs to
 
 Reading order for a first pass: 01, then 03, then 11. Those three give you the platform, the core constraint, and the method. The rest are reference docs you pull up while building.
 
-If you are wiring an AI assistant into the build (the recommended way), read 12 first, it tells you how to connect these docs and how to run the collaboration. [SKILL.md](SKILL.md) at the repo root is the operating contract for the assistant: install this folder as a skill, or just point a coding agent at the repo (CLAUDE.md routes it there automatically).
+If you are wiring an AI assistant into the build (the recommended way), read 12 first, it tells you how to connect these docs and how to run the collaboration. [SKILL.md](skills/powerplatform-skill/SKILL.md) is the operating contract for the assistant. Install it as a Claude Code plugin (see Install above), or just point a coding agent at the repo (CLAUDE.md routes it there automatically).
 
 ## The docs
 

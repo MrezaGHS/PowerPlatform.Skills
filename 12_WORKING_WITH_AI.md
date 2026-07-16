@@ -8,7 +8,7 @@ These docs exist so an AI assistant with them in context can do the code side of
 
 ### Option A: give a coding agent this repo
 
-Two ways. Install it as a skill: copy this folder into the agent's skills directory (for Claude Code, `~/.claude/skills/PowerPlatform.Skills/`), and the SKILL.md frontmatter makes it trigger on any Power Apps work. Or clone it alongside the app repo and tell the agent to read SKILL.md first (CLAUDE.md at the root does that automatically when the agent works inside this repo). Either way the agent can then edit pa.yaml source, run pac commands, manage git, and draft the docs directly.
+Two ways. Install it as a Claude Code plugin: run the two `/plugin` commands in README.md, and the SKILL.md frontmatter makes it trigger on any Power Apps work. Or clone it alongside the app repo and tell the agent to read the skill under `skills/` first (CLAUDE.md at the root points there when the agent works inside this repo). Either way the agent can then edit pa.yaml source, run pac commands, manage git, and draft the docs directly.
 
 ### Option B: a chat project with knowledge files
 

@@ -19,7 +19,7 @@ This skill turns the docs in this repo into a working build method. The numbered
 
 ## How to work
 
-1. Orient once per session: README.md has the doc map. 01_PLATFORM_MAP.md has the stack and the five bucket map of what is code versus what is manual clicks. Never promise in code what belongs to a clicks bucket.
+1. Find the docs first. The numbered docs (01 to 13) and README.md live at the plugin root, one level above this `skills/` folder. Every doc named below is there. README.md has the doc map. 01_PLATFORM_MAP.md has the stack and the five bucket map of what is code versus what is manual clicks. Never promise in code what belongs to a clicks bucket.
 2. Load the doc that governs the task before writing anything:
 
 | Task | Doc |
@@ -49,7 +49,6 @@ This skill turns the docs in this repo into a working build method. The numbered
 7. Redact anything shareable. Alias company name, role titles instead of people names, placeholder tenant URLs and GUIDs. Verify with a grep before committing.
 8. Keep the docs honest. A new gotcha earned on a real build gets added to the matching doc the same session. When reality contradicts a doc, fix the doc.
 
-## Two ways to install
+## How this ships
 
-- As a repo: point a coding agent at this folder (CLAUDE.md routes here automatically), or upload the numbered docs to an AI project's knowledge with the instructions template in 12_WORKING_WITH_AI.md.
-- As a skill: copy this whole folder into your agent's skills directory (for Claude Code, `~/.claude/skills/PowerPlatform-Skill/`). The frontmatter above makes it trigger on Power Apps work.
+This repo is a Claude Code plugin. This skill lives under `skills/`, and the numbered docs it routes to sit at the plugin root. Install it from GitHub with the two commands in README.md, then it triggers on Power Apps work on any Claude plan. To feed the docs to a different AI tool instead, use the instructions template in 12_WORKING_WITH_AI.md.
