@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "powerplatform-skills",
+  "description": "Power Platform build skill as code. Canvas Power Apps on SharePoint plus Power Automate flows, standard Microsoft 365, no Dataverse.",
+  "owner": {
+    "name": "MrezaGHS",
+    "url": "https://github.com/MrezaGHS"
+  },
+  "plugins": [
+    {
+      "name": "powerplatform-skills",
+      "description": "Builds and debugs canvas Power Apps and Power Automate flows as code (pa.yaml, flow JSON) on SharePoint, no Dataverse.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

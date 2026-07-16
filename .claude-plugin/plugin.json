@@ -1,0 +1,11 @@
+{
+  "name": "powerplatform-skills",
+  "version": "1.0.0",
+  "description": "Build Power Apps canvas apps on SharePoint and Power Automate as code. Standard Microsoft 365 licensing, no Dataverse. Covers pa.yaml, pack and unpack, Power Fx rules, SharePoint list design, approvals, and flow JSON.",
+  "author": {
+    "name": "MrezaGHS",
+    "url": "https://github.com/MrezaGHS"
+  },
+  "repository": "https://github.com/MrezaGHS/PowerPlatform.Skills",
+  "skills": "./skills/"
+}
