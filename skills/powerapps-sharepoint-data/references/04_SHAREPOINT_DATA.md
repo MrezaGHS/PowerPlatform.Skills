@@ -17,7 +17,7 @@ Every app built with this method has landed on the same four lists. Start every 
 
 The formulas throughout these docs use the short unprefixed names (`Deals`, `Deal_Files`, `Approvals`, `Role_Config`) for readability. In a real app, apply the prefix rule below to all of them.
 
-Plus one document library with a per record folder structure (created by a flow, see 09_FLOWS.md).
+Plus one document library with a per record folder structure (created by a flow, see 09_FLOWS.md in the `powerapps-approvals-and-flows` skill).
 
 ## Naming rules (these prevent whole classes of bugs)
 
@@ -41,7 +41,7 @@ Plus one document library with a per record folder structure (created by a flow,
 | Yes/No | `Coalesce(record.Field, false)` | `Field: true` |
 | Hyperlink | `record.Field` | `Field: "https://..."` |
 
-Two of these cause most patch failures. Never patch a raw string or number into a Choice or Lookup column (you get a useless generic network error). Never write a Person column from an email string, pass the Person record. Full rules in 06_POWERFX_RULES.md.
+Two of these cause most patch failures. Never patch a raw string or number into a Choice or Lookup column (you get a useless generic network error). Never write a Person column from an email string, pass the Person record. Full rules in 06_POWERFX_RULES.md in the `powerapps-powerfx` skill.
 
 Practical type notes from the builds:
 
@@ -61,7 +61,7 @@ Columns cluster into groups. Use this as the checklist when designing a new one:
 - Headline numbers for dashboards: contract value, target margin, actual margin, margin given up.
 - Dates for cycle time KPIs: submitted, target, decision, archived, `Last_Updated_On` (stamped by every patch).
 - Folder and locks: `Folder_Link` (Hyperlink, written by the flow or the app once), `Folders_Created` (Yes/No idempotency flag), `Is_Locked` (Yes/No), `Locked_By` (Person).
-- Notification flags: `<Event>_Notification_Sent` (Yes/No) per send once event, plus whatever the re-send suppression needs (last notified date, last notified email). Owned by flows. See 09_FLOWS.md.
+- Notification flags: `<Event>_Notification_Sent` (Yes/No) per send once event, plus whatever the re-send suppression needs (last notified date, last notified email). Owned by flows. See 09_FLOWS.md in the `powerapps-approvals-and-flows` skill.
 
 Step numbering choice: a Number column is simpler to compare and increment. A Choice of strings ("1" to "8") reads better in SharePoint views but forces `{ Value: "5" }` syntax and `Value()` conversions everywhere. Either works. Pick one per app and never mix.
 
@@ -122,7 +122,7 @@ One row per approver, per record, per cycle:
 | `Review_Cycle` | Number | Matches the record's cycle counter |
 | `Notification_Sent` | Yes/No | Owned by the notification flow |
 
-Full approval mechanics in 08_APPROVALS_PERMISSIONS.md.
+Full approval mechanics in 08_APPROVALS_PERMISSIONS.md in the `powerapps-approvals-and-flows` skill.
 
 ## SCHEMA_AS_BUILT.md: the contract document
 

@@ -81,7 +81,7 @@ Set(varStep5_SubStep, "A");
 Set(varSendNotification_Ready, true);
 Set(varSendNotification_TimerStart, false);
 
-// 6) TYPED DEFAULTS (patch safety, see 06_POWERFX_RULES.md)
+// 6) TYPED DEFAULTS (patch safety, see 06_POWERFX_RULES.md in the `powerapps-powerfx` skill)
 Set(varReviewDefault, Defaults(Approvals));
 
 // 7) THEME (see below)

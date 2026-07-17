@@ -32,7 +32,7 @@ Era 2 (after the first combo box or attachment form goes in):
 
 Practical consequences:
 
-1. Sequence the build. Do everything you possibly can in YAML first, in one continuous era. People pickers and attachment forms go in last, in Studio, as a documented manual batch (10_MANUAL_STEPS.md).
+1. Sequence the build. Do everything you possibly can in YAML first, in one continuous era. People pickers and attachment forms go in last, in Studio, as a documented manual batch (10_MANUAL_STEPS.md in the `powerapps-build-playbook` skill).
 2. Put placeholders in the YAML where Studio only controls will go (a dashed box, a "people picker added in Studio" label) so the layout is reserved and the manual step is obvious.
 3. Once past the door, retire the pack verb from your helper script so nobody packs and imports a stale build over live work.
 4. After the door, the repo becomes a changelog. Two ways to keep it true: mirror each confirmed Studio change into the YAML by hand, and periodically run a full export and unpack that trues up everything at once.
@@ -111,7 +111,7 @@ On first ever import the data connections must be added once inside Studio (add 
 
 After the one way door, Power Apps Studio is the only editor. Two working styles, use both:
 
-Style 1, paste driven (day to day changes). The developer (or the AI assistant, see 12_WORKING_WITH_AI.md) writes the exact Power Fx property values. A human pastes them into Studio, tests, and confirms. Only after confirmation does the same change get mirrored into the repo YAML by hand and committed. Order matters: paste first, confirm, then mirror. Nothing rejected ever lands in git.
+Style 1, paste driven (day to day changes). The developer (or the AI assistant, see 12_WORKING_WITH_AI.md in the `powerapps-build-playbook` skill) writes the exact Power Fx property values. A human pastes them into Studio, tests, and confirms. Only after confirmation does the same change get mirrored into the repo YAML by hand and committed. Order matters: paste first, confirm, then mirror. Nothing rejected ever lands in git.
 
 Style 2, export driven (periodic true up). On a fresh branch, run the export and unpack helper: `pac solution export`, `pac solution unpack` into the repo, `pac canvas unpack --layout SourceCode` on the msapp inside it, then commit and open a pull request. The helper cuts the branch and opens the PR for you instead of committing to `main`. This captures accumulated Studio work in one PR and corrects any drift from hand mirroring.
 
@@ -142,7 +142,7 @@ Putting the canvas app into the solution too means one export captures app plus 
 2. Run App.OnStart once. Without it every `var` is blank and the theme renders as black boxes.
 3. Formulas and errors panel: zero red.
 4. Click through the changed feature against real SharePoint data.
-5. If a flow signature changed, remove and re-add the flow in the Power Automate pane (see 13_TROUBLESHOOTING.md, "received 9, expected 7-8").
+5. If a flow signature changed, remove and re-add the flow in the Power Automate pane (see 13_TROUBLESHOOTING.md in the `powerapps-troubleshooting` skill, "received 9, expected 7-8").
 
 ## What belongs in git
 
