@@ -15,7 +15,7 @@ This repo is a Claude Code plugin. It works anywhere you run Claude Code: the CL
 Terminal, the reliable way that works in every setup:
 
 ```
-claude plugin marketplace add MrezaGHS/PowerPlatform.Skills
+claude plugin marketplace add ghsystems/PowerPlatform.Skills
 claude plugin install powerplatform-skills@powerplatform-skills
 ```
 
@@ -24,7 +24,7 @@ Run those from a project folder, not your home directory. A git safety check can
 Inside a Claude Code chat session, the interactive form also works:
 
 ```
-/plugin marketplace add MrezaGHS/PowerPlatform.Skills
+/plugin marketplace add ghsystems/PowerPlatform.Skills
 /plugin install powerplatform-skills@powerplatform-skills
 ```
 
@@ -37,14 +37,14 @@ Both Codex and Cursor read skills from `~/.agents/skills/`. Clone the repo and c
 PowerShell (Windows):
 
 ```
-git clone https://github.com/MrezaGHS/PowerPlatform.Skills
+git clone https://github.com/ghsystems/PowerPlatform.Skills
 Copy-Item -Recurse -Force PowerPlatform.Skills/skills/* ~/.agents/skills/
 ```
 
 macOS or Linux:
 
 ```
-git clone https://github.com/MrezaGHS/PowerPlatform.Skills
+git clone https://github.com/ghsystems/PowerPlatform.Skills
 mkdir -p ~/.agents/skills && cp -R PowerPlatform.Skills/skills/* ~/.agents/skills/
 ```
 

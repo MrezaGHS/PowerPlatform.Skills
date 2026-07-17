@@ -3,8 +3,8 @@
   "name": "powerplatform-skills",
   "description": "Power Platform build skills as code. Canvas Power Apps on SharePoint plus Power Automate flows, standard Microsoft 365, no Dataverse.",
   "owner": {
-    "name": "MrezaGHS",
-    "url": "https://github.com/MrezaGHS"
+    "name": "ghsystems",
+    "url": "https://github.com/ghsystems"
   },
   "plugins": [
     {
