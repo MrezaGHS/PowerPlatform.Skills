@@ -8,14 +8,14 @@ The approval engine and the access model are where governance actually lives. On
 
 ### The data shape
 
-One row per approver, per record, per review cycle, in the approvals list (04_SHAREPOINT_DATA.md). The record itself carries a cycle counter (`Review_Cycle`, starts at 1) and an overall status. That is the whole engine. Everything else is queries over it.
+One row per approver, per record, per review cycle, in the approvals list (04_SHAREPOINT_DATA.md in the `powerapps-sharepoint-data` skill). The record itself carries a cycle counter (`Review_Cycle`, starts at 1) and an overall status. That is the whole engine. Everything else is queries over it.
 
 ### Assigning approvers
 
 Approvers come from the roles list, assigned by an explicit button, not as a side effect of a step move:
 
 ```
-// btn_Assign OnSelect (route aware, typed default per 06_POWERFX_RULES.md Rule 11)
+// btn_Assign OnSelect (route aware, typed default per 06_POWERFX_RULES.md in the `powerapps-powerfx` skill Rule 11)
 ForAll(
     Switch(varView,
         "FULL_FLOW", Table({ r: "President" }, { r: "COO" }, { r: "CFO" },
@@ -41,7 +41,7 @@ Conditional approvers are data rules: on the lightweight routes the CFO row is a
 
 ### Deciding
 
-Each approver acts on their own row (the per row gallery in 07_UI_PATTERNS.md). Two decision actions only, Approve and Return (or Reject). The overall outcome flavor (approved, approved with conditions, approved as margin exception) is set once on the record by whoever finalizes, not per approver.
+Each approver acts on their own row (the per row gallery in 07_UI_PATTERNS.md in the `powerapps-architecture-and-ui` skill). Two decision actions only, Approve and Return (or Reject). The overall outcome flavor (approved, approved with conditions, approved as margin exception) is set once on the record by whoever finalizes, not per approver.
 
 Parallel by default: all assigned approvers decide in any order, the record is approved when no non approved rows remain in the current cycle:
 
@@ -85,7 +85,7 @@ Set(varApRecipients,
         ) As p, p.Value, ";"));
 ```
 
-`Distinct` matters: one person holding two roles gets one email. The debounce and auto grey pattern (07_UI_PATTERNS.md) wraps the Send button. The upgrade path when executives will not open any app: Microsoft Approvals cards in Teams, sent per approver by the flow, with the decision written back to the row. Design for it from the start by keeping one row per approver.
+`Distinct` matters: one person holding two roles gets one email. The debounce and auto grey pattern (07_UI_PATTERNS.md in the `powerapps-architecture-and-ui` skill) wraps the Send button. The upgrade path when executives will not open any app: Microsoft Approvals cards in Teams, sent per approver by the flow, with the decision written back to the row. Design for it from the start by keeping one row per approver.
 
 ## The two layer access model
 
@@ -217,7 +217,7 @@ Pick the calibration per process, deliberately, and write it down.
 | "You don't have permission" on Save | Missing Contribute on the SharePoint list. Fix in SharePoint |
 | Edit stays disabled for a just assigned person | Gate recomputes on OnVisible. Navigate away and back |
 | Approve button disabled for an approver | Not their row, wrong cycle, or the record is locked |
-| Combo shows last cycle's approver | Missing cycle filter in DefaultSelectedItems (06_POWERFX_RULES.md Rule 8) |
+| Combo shows last cycle's approver | Missing cycle filter in DefaultSelectedItems (06_POWERFX_RULES.md in the `powerapps-powerfx` skill Rule 8) |
 | Admin cannot edit a step | By design. Visibility, not authority |
 | A newly assigned person still cannot see the record, even hours later | The per record permission flow only runs on that record's own created or modified event. Open and save the record once to re-trigger it, or check the flow's run history for a failure |
 | A person removed from a record's team can still open it | The flow re-syncs grants on every edit, so a stale grant survives until the record is edited again after the removal. Not automatic on person column removal alone if nothing else changed the item |

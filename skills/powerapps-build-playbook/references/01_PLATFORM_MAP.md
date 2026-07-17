@@ -45,7 +45,7 @@ Dataverse is the licensed premium database. SharePoint lists are included in sta
 
 The trade offs you accept:
 
-- No Power Platform Git Integration. That supported source control path requires the app to live in a Dataverse solution with Dataverse as the backing store. Without it, source control is the pac CLI workflow described in 03_SOURCE_WORKFLOW.md, including its one way door.
+- No Power Platform Git Integration. That supported source control path requires the app to live in a Dataverse solution with Dataverse as the backing store. Without it, source control is the pac CLI workflow described in 03_SOURCE_WORKFLOW.md in the `powerapps-source-workflow` skill, including its one way door.
 - Delegation limits. SharePoint queries in Power Fx are only partly delegable. Person column filters are non delegable. Keep hot lists small (approvals, roles) and design dashboards so the non delegable parts run over small filtered sets.
 - No Business Process Flows. Multi step processes with branching are hand built with containers and a step number column. That is exactly what the patterns in this playbook do.
 
@@ -72,7 +72,7 @@ This is the most important planning table in the repo. Everything you build fall
 
 ### Bucket 1: canvas app source (pa.yaml). Codeable
 
-All of this can be written as YAML source and packed into an app, until the one way door closes (see 03_SOURCE_WORKFLOW.md):
+All of this can be written as YAML source and packed into an app, until the one way door closes (see 03_SOURCE_WORKFLOW.md in the `powerapps-source-workflow` skill):
 
 - Screens, group containers, labels, classic buttons, classic text inputs, checkboxes, date pickers, galleries (vertical and horizontal), HTML viewers, icons, rectangles, timers.
 - Every Power Fx formula: App.OnStart, OnVisible, OnSelect, Visible, DisplayMode, Items, Fill, and the rest.
@@ -91,7 +91,7 @@ The moment one of these exists in the app, YAML packing is dead for the whole ap
 
 ### Bucket 3: Power Automate flow definitions. Codeable after a skeleton exists
 
-Flow logic is JSON and can be authored and edited as code, with one caveat: the trigger, connection references and auth boilerplate are error prone to hand author from nothing. The proven method is skeleton first: a human creates the trigger and connection in the designer, exports the solution, then the JSON logic is written as code. Details in 09_FLOWS.md.
+Flow logic is JSON and can be authored and edited as code, with one caveat: the trigger, connection references and auth boilerplate are error prone to hand author from nothing. The proven method is skeleton first: a human creates the trigger and connection in the designer, exports the solution, then the JSON logic is written as code. Details in 09_FLOWS.md in the `powerapps-approvals-and-flows` skill.
 
 ### Bucket 4: maker portal clicks. Always manual
 
@@ -127,15 +127,15 @@ These are the physics every pattern in this repo assumes:
 
 | You want to | Read |
 |---|---|
-| Set up the tools | 02_ENVIRONMENT_SETUP.md |
-| Understand pa.yaml and the one way door | 03_SOURCE_WORKFLOW.md |
-| Design the lists | 04_SHAREPOINT_DATA.md |
-| Understand the app shell | 05_APP_ARCHITECTURE.md |
-| Write correct Power Fx | 06_POWERFX_RULES.md |
-| Build steppers, gates, panels | 07_UI_PATTERNS.md |
-| Build approvals and permissions | 08_APPROVALS_PERMISSIONS.md |
-| Build the flows | 09_FLOWS.md |
+| Set up the tools | 02_ENVIRONMENT_SETUP.md in the `powerapps-source-workflow` skill |
+| Understand pa.yaml and the one way door | 03_SOURCE_WORKFLOW.md in the `powerapps-source-workflow` skill |
+| Design the lists | 04_SHAREPOINT_DATA.md in the `powerapps-sharepoint-data` skill |
+| Understand the app shell | 05_APP_ARCHITECTURE.md in the `powerapps-architecture-and-ui` skill |
+| Write correct Power Fx | 06_POWERFX_RULES.md in the `powerapps-powerfx` skill |
+| Build steppers, gates, panels | 07_UI_PATTERNS.md in the `powerapps-architecture-and-ui` skill |
+| Build approvals and permissions | 08_APPROVALS_PERMISSIONS.md in the `powerapps-approvals-and-flows` skill |
+| Build the flows | 09_FLOWS.md in the `powerapps-approvals-and-flows` skill |
 | Know every manual click | 10_MANUAL_STEPS.md |
 | Build a whole new app start to finish | 11_BUILD_PLAYBOOK.md |
 | Wire an AI assistant into the build | 12_WORKING_WITH_AI.md |
-| Fix an error | 13_TROUBLESHOOTING.md |
+| Fix an error | 13_TROUBLESHOOTING.md in the `powerapps-troubleshooting` skill |

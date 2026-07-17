@@ -72,13 +72,13 @@ Every app gets its own private GitHub repo. The layout that worked:
     app/
       app.ps1                     pull helper (download live app and unpack)
       src/                        canvas source: Src/App.pa.yaml, Src/scr_<X>.pa.yaml
-      STUDIO_TODO.md              the manual steps log (see 10_MANUAL_STEPS.md)
+      STUDIO_TODO.md              the manual steps log (see 10_MANUAL_STEPS.md in the `powerapps-build-playbook` skill)
     flows/
       <SolutionName>/             unpacked solution: Other/, Workflows/, CanvasApps/
   source_files/                   confidential originals. GITIGNORED, never pushed
 ```
 
-The knowledgebase folder is what you upload to an AI assistant's project knowledge. Keep one topic per file, numbered. See 12_WORKING_WITH_AI.md.
+The knowledgebase folder is what you upload to an AI assistant's project knowledge. Keep one topic per file, numbered. See 12_WORKING_WITH_AI.md in the `powerapps-build-playbook` skill.
 
 ## What gets gitignored
 
@@ -108,7 +108,7 @@ powerapps/flows/*_build.zip
 powerapps/flows/*/CanvasApps/*.msapp
 ```
 
-Two rules behind that list. First, binary `.msapp` files are build artifacts, the unpacked YAML is the source, so the binaries stay out (they add hundreds of KB per commit and diff as "binary file changed"). Second, anything confidential (original business documents, real logos) never enters git at all. The repo is written redacted from the start: company name replaced with an alias, people replaced with role titles. See 12_WORKING_WITH_AI.md for the redaction convention.
+Two rules behind that list. First, binary `.msapp` files are build artifacts, the unpacked YAML is the source, so the binaries stay out (they add hundreds of KB per commit and diff as "binary file changed"). Second, anything confidential (original business documents, real logos) never enters git at all. The repo is written redacted from the start: company name replaced with an alias, people replaced with role titles. See 12_WORKING_WITH_AI.md in the `powerapps-build-playbook` skill for the redaction convention.
 
 ## The pull request workflow
 

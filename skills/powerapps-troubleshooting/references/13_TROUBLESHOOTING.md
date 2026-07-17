@@ -74,6 +74,6 @@ Every entry here happened on a real build. Search this page first, the exact mes
 ## When something is not listed
 
 1. Read the exact error in the Formulas panel or the flow run history. The message is usually literal.
-2. Check it against the rules in 06_POWERFX_RULES.md, most runtime surprises are one of the 22.
+2. Check it against the rules in 06_POWERFX_RULES.md in the `powerapps-powerfx` skill, most runtime surprises are one of the 22.
 3. Reproduce it in isolation (one button, one patch).
 4. When it is new and real, fix it, then add the row here. That is how this table got built.

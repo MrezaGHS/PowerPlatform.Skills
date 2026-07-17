@@ -71,7 +71,7 @@ Patch(Deals, LookUp(Deals, ID = varDeal.ID),
 Set(varStep3_SubStep, "B");
 ```
 
-If two users must agree on it, it lives in a column. Mirrors get rehydrated in OnVisible (05_APP_ARCHITECTURE.md).
+If two users must agree on it, it lives in a column. Mirrors get rehydrated in OnVisible (05_APP_ARCHITECTURE.md in the `powerapps-architecture-and-ui` skill).
 
 ### Rule 6: One writer per column
 
@@ -193,7 +193,7 @@ An HtmlViewer whose `HtmlText` references another control's property, which itse
 
 ### Rule 18: `.Run()` argument order follows the trigger's required array
 
-Inputs appear in the flow JSON as `text`, `text_1`, `text_2`, `number`, `file`. The app passes them positionally in the order of the trigger schema's `required` array, optional inputs (like a file) last. Full anatomy in 09_FLOWS.md.
+Inputs appear in the flow JSON as `text`, `text_1`, `text_2`, `number`, `file`. The app passes them positionally in the order of the trigger schema's `required` array, optional inputs (like a file) last. Full anatomy in 09_FLOWS.md in the `powerapps-approvals-and-flows` skill.
 
 ### Rule 19: "received 9, expected 7-8" is a cache, not your code
 

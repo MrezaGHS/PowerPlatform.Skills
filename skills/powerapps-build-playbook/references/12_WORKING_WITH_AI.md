@@ -6,9 +6,14 @@ These docs exist so an AI assistant with them in context can do the code side of
 
 ## Two ways to connect
 
-### Option A: give a coding agent this repo
+### Option A: install the skills into your coding agent
 
-Two ways. Install it as a Claude Code plugin: run the two `/plugin` commands in README.md, and the SKILL.md frontmatter makes it trigger on any Power Apps work. Or clone it alongside the app repo and tell the agent to read the skill under `skills/` first (CLAUDE.md at the root points there when the agent works inside this repo). Either way the agent can then edit pa.yaml source, run pac commands, manage git, and draft the docs directly.
+The repo ships task specific skills that work in Claude Code, Codex, and Cursor. The Install
+section in README.md is the single source of truth: Claude Code installs the repo as a
+plugin, Codex and Cursor read the skill folders from `~/.agents/skills/` after one clone and
+copy. Once installed, the right skill triggers on its own Power Apps work and the agent can
+edit pa.yaml source, run pac commands, manage git, and draft the docs directly. Working
+inside this repo itself, AGENTS.md routes the agent to the skills.
 
 ### Option B: a chat project with knowledge files
 
